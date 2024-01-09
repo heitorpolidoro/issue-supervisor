@@ -101,6 +101,8 @@ def get_tasklist(issue_body: str) -> list[tuple[bool, str]]:
 
 
 def get_issue(gh: Github, repository: Repository, task: str) -> Optional[Issue]:
+    if "#" not in task:
+        return None
     issue_repository, issue_number = task.split("#")
     if issue_repository:
         repository = gh.get_repo(issue_repository)
@@ -125,7 +127,8 @@ def handle_create_or_edit(event: Union[IssueOpenedEvent, IssueEditedEvent]):
     :param event:
     :return:
     """
-    handle_tasklist(event)
+    if event.issue.body:
+        handle_tasklist(event)
     add_to_project(event)
 
     # get_issues_to_create(event)
