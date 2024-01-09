@@ -1,4 +1,4 @@
-# github-app-handler<=1.0
+github-app-handler<=1.0
 sentry-sdk[flask]<=2.0
 flask<=4.0.0
 # Polidoro-PyGithub==2.2.0rc5
