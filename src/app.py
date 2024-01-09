@@ -13,12 +13,9 @@ from flask import Flask
 from github import Github, UnknownObjectException
 from github.Issue import Issue
 from github.Repository import Repository
-
-import tests.conftest
-from githubapp.events.issues import IssueEditedEvent
-
 from githubapp import webhook_handler
 from githubapp.events import IssuesEvent, IssueOpenedEvent
+from githubapp.events.issues import IssueEditedEvent
 
 logging.basicConfig(
     stream=sys.stdout,
@@ -112,6 +109,11 @@ def get_issue(gh: Github, repository: Repository, task: str) -> Optional[Issue]:
 
 
 def add_to_project(event):
+    """
+    TODO: add to project.
+    :param event: 
+    :return: 
+    """""
     pass
 
 
@@ -160,19 +162,3 @@ def handle_tasklist(event: IssuesEvent):
         issue.edit(body=issue_body)
 
 
-# @webhook_handler.webhook_handler(IssuesEvent)
-# def handle_issue(event: IssuesEvent):
-#     issue = event.issue
-#     repository_to_sync = None
-#     if issue.body and (
-#         repository_to_full_name := get_message_command(issue.body, "sync")
-#     ):
-#         repository_to_sync = event.gh.get_repo(repository_to_full_name)
-#     elif repository_to_sync_name := get_repository_to_sync_from_title(issue.title):
-#         if "/" not in repository_to_sync_name:
-#             repository_to_sync_name = (
-#                 f"{event.issue.repository.owner.login}/{repository_to_sync_name}"
-#             )
-#         repository_to_sync = event.gh.get_repo(repository_to_sync_name)
-#
-#     sync_issue(issue, repository_to_sync)
