@@ -38,3 +38,13 @@ def test_create_in_other_repository_with_other_title(event, issue, repository):
         handle_tasklist(event)
         get_repository.assert_called_once_with(ANY, "other_repo")
         repository.create_issue.assert_called_once_with(title="other title")
+
+
+def test_handle_issue_state(event):
+    with (
+        patch(GET_TASKLIST, return_value=[(True, "repo#issue")]),
+        patch("src.app.get_issue", return_value="issue"),
+        patch("src.app.handle_issue_state") as handle_issue_state,
+    ):
+        handle_tasklist(event)
+        handle_issue_state.assert_called_once_with(True, "issue")
