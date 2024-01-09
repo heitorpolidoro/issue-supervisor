@@ -114,7 +114,7 @@ def add_to_project(event):
     :param event: 
     :return: 
     """""
-    pass
+    raise NotImplementedError()
 
 
 @webhook_handler.webhook_handler(IssueOpenedEvent)
