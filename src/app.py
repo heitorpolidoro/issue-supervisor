@@ -113,7 +113,7 @@ def add_to_project(event):
     TODO: add to project.
     :param event: 
     :return: 
-    """""
+    """
     raise NotImplementedError()
 
 
