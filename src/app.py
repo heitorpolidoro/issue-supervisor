@@ -110,9 +110,9 @@ def get_issue(gh: Github, repository: Repository, task: str) -> Optional[Issue]:
 def add_to_project(event):
     """
     TODO: add to project.
-    :param event: 
-    :return: 
-    """ ""
+    :param event:
+    :return:
+    """
     raise NotImplementedError()
 
 
