@@ -119,6 +119,12 @@ def add_to_project(event):
 @webhook_handler.webhook_handler(IssueOpenedEvent)
 @webhook_handler.webhook_handler(IssueEditedEvent)
 def handle_create_or_edit(event: Union[IssueOpenedEvent, IssueEditedEvent]):
+    """
+    Handle the IssueOpened and IssueEdited events, handling the tasklist and add the issue to the main project if
+    configured to
+    :param event:
+    :return:
+    """
     handle_tasklist(event)
     add_to_project(event)
 
@@ -126,6 +132,13 @@ def handle_create_or_edit(event: Union[IssueOpenedEvent, IssueEditedEvent]):
 
 
 def handle_issue_state(checked, task_issue):
+    """
+    Handle the state of the issue.
+    If the issue is closed and the checkbox is checked, open the issue.
+    If the issue is open and the checkbox is unchecked, close the issue.
+    :param checked:
+    :param task_issue:
+    """
     if checked:
         if task_issue.state == "open":
             task_issue.edit(state="closed")
@@ -134,6 +147,19 @@ def handle_issue_state(checked, task_issue):
 
 
 def handle_tasklist(event: IssuesEvent):
+    """
+    Handle the tasklist in the issue.
+    Create issues for each task in the tasklist following:
+    - If the task is a valid repository name, create an issue in that repository with the same title as the
+    original issue
+    - If the task follows the pattern "[repository_name] issue title" create an issue in that repository
+    with "issue title" as title
+    - If none of above, create an issue in the same repository with "<task>" as title.
+
+    Replace the task with the issue reference in the issue body.
+    :param event:
+    :return:
+    """
     gh = event.gh
     repository = event.repository
     issue = event.issue
