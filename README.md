@@ -1,4 +1,4 @@
-# Self Approver
+# Issue Supervisor
 An App to approve Pull Requests within certain conditions:
 - The branch "owner" (author of the first commit of the branch) is the repository owner
 - The base branch of the Pull Request is protected
